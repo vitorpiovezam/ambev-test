@@ -1,0 +1,53 @@
+# Arquivo gerado pelo 'dotnet new gitignore' e customizado para este projeto
+
+## IGNORAR ARQUIVOS DE DEPENDÊNCIAS, LOGS, TEMPORÁRIOS E BUILD ##
+
+# Dependências
+[Dd]ependencies/
+[Pp]ackages/
+
+# Arquivos de build e temporários
+[Bb]in/
+[Oo]bj/
+[Rr]elease/
+[Rr]eleases/
+[Dd]ebug/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.log
+*.tmp
+*.temp
+
+# Arquivos de usuário do Nuget
+*.nuget.props
+*.nuget.targets
+
+## IGNORAR ARQUIVOS DE IDEs E FERRAMENTAS ##
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Mac/Linux
+.DS_Store
+Thumbs.db
+
+## IGNORAR ARQUIVOS DE CONFIGURAÇÃO LOCAL E SEGREDOS ##
+# Arquivos de segredos e configurações de ambiente que não devem ir para o repositório
+secrets.json
+appsettings.Development.json
+.env
+
+# Cache de ferramentas
+.sonarlint/
+.scannerwork/
