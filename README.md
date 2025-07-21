@@ -11,11 +11,7 @@ Esta é a API de Vendas desenvolvida para o teste técnico.
 
 Siga os passos abaixo para configurar e rodar o ambiente completo.
 
-### 1. Preparar o Ambiente
-
-Clone o repositório e navegue até a pasta `backend` do projeto.
-
-### 2. Subir o Banco de Dados
+### 1. Subir o Banco de Dados
 
 Para aplicar as migrações do banco de dados, precisamos que o serviço do PostgreSQL esteja no ar.
 
@@ -23,9 +19,7 @@ Para aplicar as migrações do banco de dados, precisamos que o serviço do Post
 docker compose up -d ambev.developerevaluation.database
 ```
 
-Aguarde cerca de 15 segundos para o banco de dados iniciar completamente.
-
-### 3. Aplicar as Migrações (Criar as Tabelas)
+### 2. Aplicar as Migrações (Criar as Tabelas)
 
 As migrações do Entity Framework criam a estrutura de tabelas no banco de dados.
 
@@ -40,19 +34,36 @@ dotnet ef database update
 
 Após a conclusão, **lembre-se de reverter** a `ConnectionStrings` no `appsettings.Development.json` para `Host=ambev.developerevaluation.database` para que a API possa se comunicar com o banco de dados de dentro do contêiner.
 
-### 4. Subir a Aplicação Completa
+### 3. Subir a Aplicação Completa
 
-Volte para a pasta `backend` e use o Docker Compose para construir e iniciar todos os serviços.
+Use o Docker Compose para construir e iniciar todos os serviços.
 
 ```bash
 # Na pasta /backend
 docker compose up --build -d
 ```
 
-### 5. Testar
+### 4. Testar
 
 A API estará disponível na porta `8080`.
 
 * **Endpoint de Criação de Venda:** `POST http://localhost:8080/api/sales`
 
 A collection do Postman com exemplos de requisição pode ser importada a partir dos comandos cURL disponíveis no projeto.
+
+## Rodando os Testes Automatizados
+
+O projeto possui uma suíte de testes de unidade para validar as regras de negócio. Na pasta raíz rode:
+
+```bash
+dotnet test
+```
+
+Todos os testes devem passar com sucesso.
+
+
+----------------------------------------------------------------------
+
+Esse projeto foi feito e rodado em ambiente WSL2 com Debian, qualquer problema me dá um alô no e-mail. Valeu.
+
+Made with ❤ by [Vitor Piovezam](mailto::vitor@piovezam.ru)

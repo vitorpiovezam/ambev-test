@@ -1,4 +1,5 @@
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.Application.Sales.GetAllSales;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using AutoMapper;
@@ -27,7 +28,7 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             {
                 var command = _mapper.Map<CreateSaleCommand>(request);
                 var response = await _mediator.Send(command, cancellationToken);
-                
+
                 return Ok(new ApiResponseWithData<CreateSaleResponse>
                 {
                     Success = true,
@@ -35,10 +36,24 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
                     Data = _mapper.Map<CreateSaleResponse>(response)
                 });
             }
-            catch(InvalidOperationException ex)
+            catch (InvalidOperationException ex)
             {
                 return BadRequest(new ApiResponse { Success = false, Message = ex.Message });
             }
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetAllSales(CancellationToken cancellationToken)
+        {
+            var query = new GetAllSalesQuery();
+            var response = await _mediator.Send(query, cancellationToken);
+            
+            return Ok(new ApiResponseWithData<List<GetAllSalesQueryResponse>>
+            {
+                Success = true,
+                Message = "Vendas recuperadas com sucesso.",
+                Data = response
+            });
         }
     }
 }
