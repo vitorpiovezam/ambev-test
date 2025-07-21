@@ -30,9 +30,9 @@ namespace Ambev.DeveloperEvaluation.ORM.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public async Task<T?> GetByIdAsync(Guid id)
+        public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FindAsync(new object[] { id }, cancellationToken); // <-- MUDANÇA AQUI
         }
 
         public Task RemoveAsync(T entity)

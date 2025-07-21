@@ -1,20 +1,25 @@
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
 {
     public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, CreateSaleCommandResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<CreateSaleCommandHandler> _logger;
 
-        public CreateSaleCommandHandler(IUnitOfWork unitOfWork)
+        public CreateSaleCommandHandler(IUnitOfWork unitOfWork, ILogger<CreateSaleCommandHandler> logger)
         {
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<CreateSaleCommandResponse> Handle(CreateSaleCommand request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("Iniciando processo de criação de venda para o cliente {Customer}", request.Customer);
+            
             var sale = new Sale
             {
                 Id = Guid.NewGuid(),
@@ -32,11 +37,11 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
                 decimal discountPercentage = 0;
                 if (itemInput.Quantity >= 10)
                 {
-                    discountPercentage = 0.20m; // 20%
+                    discountPercentage = 0.20m; 
                 }
                 else if (itemInput.Quantity >= 4)
                 {
-                    discountPercentage = 0.10m; // 10%
+                    discountPercentage = 0.10m;
                 }
 
                 var totalItemPrice = itemInput.Quantity * itemInput.UnitPrice;
@@ -59,6 +64,8 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale
 
             await _unitOfWork.Sales.AddAsync(sale);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            _logger.LogInformation("Venda {SaleId} criada com sucesso com o valor total de {TotalAmount}", sale.Id, sale.TotalAmount);
 
             return new CreateSaleCommandResponse
             {

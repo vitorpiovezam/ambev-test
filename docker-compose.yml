@@ -10,13 +10,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "8080:8080" # Mapeamento explícito para clareza
+      - "8080:8080"
       - "8081:8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
 
   ambev.developerevaluation.database:
     container_name: ambev_developer_evaluation_database
@@ -26,14 +26,13 @@ services:
       POSTGRES_USER: developer
       POSTGRES_PASSWORD: ev@luAt10n
     ports:
-      - "5432:5432" # <-- MUDANÇA PRINCIPAL AQUI!
+      - "5432:5432"
     restart: unless-stopped
-
-  # O serviço (MongoDB) foi removido daqui
 
   ambev.developerevaluation.cache:
     container_name: ambev_developer_evaluation_cache 
-    image: redis:7.4.1-alpine      
+    image: redis:7.4.1-alpine
     command: redis-server --requirepass ev@luAt10n
     ports:
        - "6379:6379"
+       

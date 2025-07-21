@@ -1,18 +1,23 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Repositories;
-using Ambev.DeveloperEvaluation.ORM;
+﻿using Ambev.DeveloperEvaluation.Common.Security;
+using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.ORM.Repositories;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ambev.DeveloperEvaluation.Common.Security;
 
-namespace Ambev.DeveloperEvaluation.IoC.ModuleInitializers;
-
-public class InfrastructureModuleInitializer : IModuleInitializer
+namespace Ambev.DeveloperEvaluation.IoC.ModuleInitializers
 {
-    public void Initialize(WebApplicationBuilder builder)
+    public class InfrastructureModuleInitializer : IModuleInitializer
     {
-        builder.Services.AddScoped<DbContext>(provider => provider.GetRequiredService<DefaultContext>());
-        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        public void Initialize(WebApplicationBuilder builder)
+        {
+            // Registros dos Repositórios e Unit of Work
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            // Registro do PasswordHasher que estava faltando
+            builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
+        }
     }
 }
