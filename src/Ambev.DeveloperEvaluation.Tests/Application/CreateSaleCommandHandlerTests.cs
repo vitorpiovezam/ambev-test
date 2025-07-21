@@ -39,7 +39,7 @@ namespace Ambev.DeveloperEvaluation.Tests.Application.Sales
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
-            var expectedTotal = (15 * 10.00m) * 0.80m; // 120 * 0.80 = 96.00
+            var expectedTotal = (15 * 10.00m) * 0.80m;
             result.TotalAmount.Should().Be(expectedTotal);
         }
 
@@ -49,16 +49,22 @@ namespace Ambev.DeveloperEvaluation.Tests.Application.Sales
             var command = new CreateSaleCommand
             {
                 Customer = _faker.Person.FullName,
-                Branch = "Filial de Teste",
+                Branch = _faker.Company.CompanyName(),
                 Items = new List<SaleItemCommand>
                 {
-                    new() { Product = "Cerveja Pilsen", Quantity = 5, UnitPrice = 10.00m }
+                    new()
+                    {
+                        Product = _faker.Commerce.ProductName(),
+                        Quantity = _faker.Random.Int(4, 9),
+                        UnitPrice = _faker.Random.Decimal(5, 50)
+                    }
                 }
             };
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
-            var expectedTotal = (5 * 10.00m) * 0.90m; // 50 * 0.90 = 45.00
+            var item = command.Items.First();
+            var expectedTotal = (item.Quantity * item.UnitPrice) * 0.90m;
             result.TotalAmount.Should().Be(expectedTotal);
         }
 
@@ -77,7 +83,7 @@ namespace Ambev.DeveloperEvaluation.Tests.Application.Sales
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
-            var expectedTotal = 3 * 10.00m; // 30.00
+            var expectedTotal = 3 * 10.00m;
             result.TotalAmount.Should().Be(expectedTotal);
         }
 
