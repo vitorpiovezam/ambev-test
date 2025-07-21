@@ -49,13 +49,14 @@ A API estará disponível na porta `8080`.
 
 * **Endpoint de Criação de Venda:** `POST http://localhost:8080/api/sales`
 
-A collection do Postman com exemplos de requisição pode ser importada a partir dos comandos cURL disponíveis no projeto.
+A collection do Postman pode ser conferida aqui (não consegui exportar o arquivo) -> https://sadasdsad-9363.postman.co/workspace/Teste-Ambev~1817fbb4-8637-4a86-8abb-f8c6108b8e56/request/5150766-0030e99c-d36e-4e3b-b545-5271052f9f10?action=share&creator=5150766&ctx=documentation
 
 ## Rodando os Testes Automatizados
 
 O projeto possui uma suíte de testes de unidade para validar as regras de negócio. Na pasta raíz rode:
 
 ```bash
+cd src/Ambev.DeveloperEvaluation.Tests/
 dotnet test
 ```
 

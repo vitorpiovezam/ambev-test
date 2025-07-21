@@ -70,5 +70,43 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
             
             return Ok(new ApiResponse { Success = true, Message = "Venda cancelada com sucesso." });
         }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetSaleById([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var query = new GetSaleByIdQuery { Id = id };
+            var response = await _mediator.Send(query, cancellationToken);
+
+            if (response is null)
+            {
+                return NotFound(new ApiResponse { Success = false, Message = "Venda não encontrada." });
+            }
+            
+            return Ok(new ApiResponseWithData<GetSaleByIdQueryResponse>
+            {
+                Success = true,
+                Message = "Venda recuperada com sucesso.",
+                Data = response
+            });
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateSale([FromRoute] Guid id, [FromBody] UpdateSaleRequest request, CancellationToken cancellationToken)
+        {
+            var command = new UpdateSaleCommand 
+            { 
+                Id = id,
+                Customer = request.Customer,
+                Branch = request.Branch
+            };
+            var success = await _mediator.Send(command, cancellationToken);
+
+            if (!success)
+            {
+                return NotFound(new ApiResponse { Success = false, Message = "Venda não encontrada ou já cancelada." });
+            }
+            
+            return Ok(new ApiResponse { Success = true, Message = "Venda atualizada com sucesso." });
+        }
     }
 }
