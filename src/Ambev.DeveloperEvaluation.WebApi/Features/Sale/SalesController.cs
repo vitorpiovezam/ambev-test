@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Application.Sales.CancelSale;
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.Application.Sales.GetAllSales;
 using Ambev.DeveloperEvaluation.WebApi.Common;
@@ -41,19 +42,33 @@ namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales
                 return BadRequest(new ApiResponse { Success = false, Message = ex.Message });
             }
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAllSales(CancellationToken cancellationToken)
         {
             var query = new GetAllSalesQuery();
             var response = await _mediator.Send(query, cancellationToken);
-            
+
             return Ok(new ApiResponseWithData<List<GetAllSalesQueryResponse>>
             {
                 Success = true,
                 Message = "Vendas recuperadas com sucesso.",
                 Data = response
             });
+        }
+        
+        [HttpPatch("{id:guid}/cancel")]
+        public async Task<IActionResult> CancelSale([FromRoute] Guid id, CancellationToken cancellationToken)
+        {
+            var command = new CancelSaleCommand { SaleId = id };
+            var success = await _mediator.Send(command, cancellationToken);
+
+            if (!success)
+            {
+                return NotFound(new ApiResponse { Success = false, Message = "Venda não encontrada." });
+            }
+            
+            return Ok(new ApiResponse { Success = true, Message = "Venda cancelada com sucesso." });
         }
     }
 }
