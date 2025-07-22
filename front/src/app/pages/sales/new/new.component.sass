@@ -1,0 +1,33 @@
+.new-sale-container
+  padding: 2rem;
+  max-width: 900px;
+  margin: auto;
+
+mat-card-content
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+.form-row
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+.item-row
+  display: grid;
+  grid-template-columns: 1fr 100px 120px auto;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+
+.item-product
+  grid-column: 1 / 2;
+
+.item-quantity
+  grid-column: 2 / 3;
+
+.item-price
+  grid-column: 3 / 4;
+
+mat-form-field
+  width: 100%;
