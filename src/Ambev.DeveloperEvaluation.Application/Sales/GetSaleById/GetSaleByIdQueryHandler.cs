@@ -1,20 +1,20 @@
-using Ambev.DeveloperEvaluation.Domain.Repositories;
+using Ambev.DeveloperEvaluation.Domain.Repositories; // Mude para IUnitOfWork
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.GetSaleById
 {
     public class GetSaleByIdQueryHandler : IRequestHandler<GetSaleByIdQuery, GetSaleByIdQueryResponse?>
     {
-        private readonly ISaleRepository _saleRepository;
+        private readonly IUnitOfWork _unitOfWork; // Mude para IUnitOfWork
 
-        public GetSaleByIdQueryHandler(ISaleRepository saleRepository)
+        public GetSaleByIdQueryHandler(IUnitOfWork unitOfWork) // Mude para IUnitOfWork
         {
-            _saleRepository = saleRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<GetSaleByIdQueryResponse?> Handle(GetSaleByIdQuery request, CancellationToken cancellationToken)
         {
-            var sale = await _saleRepository.GetByIdAsync(request.Id, cancellationToken);
+            var sale = await _unitOfWork.Sales.GetByIdWithItemsAsync(request.Id, cancellationToken);
 
             if (sale is null)
             {
