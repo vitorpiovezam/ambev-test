@@ -1,5 +1,7 @@
 # Projeto de Avaliação de Desenvolvedor - API de Vendas
 
+Video Demo: https://youtu.be/m8v1JmBDCbU?si=9n2Wk7SvxwDP7lBE
+
 Esta é a API de Vendas desenvolvida para o teste técnico.
 
 ## Requisitos
@@ -65,6 +67,7 @@ Todos os testes devem passar com sucesso.
 
 ----------------------------------------------------------------------
 
-Esse projeto foi feito e rodado em ambiente WSL2 com Debian, qualquer problema me dá um alô no e-mail. Valeu.
+Esse projeto foi feito e rodado em ambiente WSL2 com Debian, qualquer problema me dá um toque no e-mail.
 
+Obrigado 
 Made with ❤ by [Vitor Piovezam](mailto::vitor@piovezam.ru)
