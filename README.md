@@ -10,6 +10,7 @@ Esta é a API de Vendas desenvolvida para o teste técnico.
 
 * Docker e Docker Compose
 * .NET 8 SDK
+* NodeJS 20 (para o front-end)
 
 ## Como Executar o Projeto do Zero
 
@@ -66,7 +67,9 @@ dotnet test
 
 Todos os testes devem passar com sucesso.
 
+## FrontEnd
 
+Para subir o Front-end basta rodar ```npm i``` e ```npm run start``` na pasta ./frontend.
 ----------------------------------------------------------------------
 
 Esse projeto foi feito e rodado em ambiente WSL2 com Debian, qualquer problema me dá um toque no e-mail.
